@@ -9,8 +9,6 @@ def contact_page(request):
 
 def about_page(request):
     return HttpResponse("<h1>This is our my contact page.</h1>")
-    
-
 
 
 
