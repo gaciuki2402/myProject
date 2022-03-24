@@ -1,8 +1,9 @@
+from faulthandler import dump_traceback_later
 from inspect import classify_class_attrs
 from tkinter import CASCADE
 from django.db import models
 
-class Person(models.Model):
+class Persona(models.Model):
     SHIRT_SIZES = (
         ("S", "Small"),
         ("M", "Medium"),
@@ -35,6 +36,24 @@ class Manufacturer(models.Model):
     pass
 class car(models.Model):
     manufacturer=models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
+
+class Person(models.Model):
+    name=models.CharField(max_length=120)
+
+    def __str__(self):
+        return self.name
+
+class Group(models.Model):
+    name=models.CharField(max_length=200)
+    members=models.ManyToManyField(Person, through="Membership")
+
+    def __str__(self):
+        return self.name
+class Membership(models.Model):
+    person=models.ForeignKey(Person, on_delete=models.CASCADE)
+    group=models.ForeignKey(Group, on_delete=models.CASCADE)
+    date_joined=models.DateField()
+    invite_reason=models.CharField(max_length=86)
 
 
 # Create your models here.
